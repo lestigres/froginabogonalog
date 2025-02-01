@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="{{ metadata.language }}">
+	<head>
+		{#-
+			The Optimum Head Order – https://www.youtube.com/watch?v=UW1PEMBdX5E
+			1. <meta charset|http-equiv|viewport />
+			2. <title>
+			3. preconnect
+			4. <script src="" async></script>
+			5. CSS that includes @import
+			6. Synchronous JS
+			7. Synchronous CSS
+			8. preload
+			9. <script src="" defer></script>
+			10. prefetch / prerender
+			11. Everything else ('SEO' meta tags, icons, Open Graph, etc.)
+		-#}
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{{ title or metadata.title }}</title>
+
+		{#-
+		Plain-text bundles are provided via the `eleventy-plugin-bundle` plugin:
+		1. CSS:
+			* Add to a per-page bundle using `{% css %}{% endcss %}`
+			* Retrieve bundle content using `{% getBundle "css" %}` or `{% getBundleFileUrl "css" %}`
+		2. Or for JavaScript:
+			* Add to a per-page bundle using `{% js %}{% endjs %}`
+			* Retrieve via `{% getBundle "js" %}` or `{% getBundleFileUrl "js" %}`
+		3. Learn more: https://github.com/11ty/eleventy-plugin-bundle
+		#}
+
+		{#- Add an arbitrary string to the bundle #}
+		{%- css %}/* This is an arbitrary CSS string added to the bundle */{% endcss %}
+		{#- Add the contents of a file to the bundle #}
+		{%- css %}{% include "public/css/index.css" %}{% endcss %}
+		{#- Or you can add from node_modules #}
+		{# {%- css %}{% include "node_modules/prismjs/themes/prism-okaidia.css" %}{% endcss %} #}
+
+		{#- Render the CSS bundle using inlined CSS (for the fastest site performance in production) #}
+		<style>
+			{% getBundle "css" %}
+		</style>
+		{#- Renders the CSS bundle using a separate file, if you can't set CSP directive style-src: 'unsafe-inline' #}
+		{#- <link rel="stylesheet" href="{% getBundleFileUrl "css" %}"> #}
+
+		{#- Add the heading-anchors web component to the JavaScript bundle #}
+		{%- js %}{% include "node_modules/@zachleat/heading-anchors/heading-anchors.js" %}{% endjs %}
+
+		<meta name="description" content="{{ description or metadata.description }}">
+		<link rel="icon" href="/img/icon.png" type="image/png">
+		<link rel="alternate" href="feed/feed.xml" type="application/atom+xml" title="{{ metadata.title }}">
+		<meta name="generator" content="{{ eleventy.generator }}">
+	</head>
+	<body>
+		<a href="#skip" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/" class="home-link">
+				{{- metadata.title -}}
+			</a>
+
+			{#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
+			<nav>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
+				<ul class="nav">
+					{%- for entry in collections.all | eleventyNavigation %}
+						<li class="nav-item">
+							<a href="{{ entry.url }}"{% if entry.url == page.url %} aria-current="page"{% endif %}>{{ entry.title }}</a>
+						</li>
+					{%- endfor %}
+				</ul>
+			</nav>
+		</header>
+
+		<main id="skip">
+			<heading-anchors>
+				{{ content | safe }}
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>
+				<small>Made with <span aria-hidden="true">&heartsuit;</span>
+					<span class="visually-hidden">love</span> by <a href="https://ellyloel.com">
+						<span aria-hidden="true">&lt;e//y&gt;</span>
+						<span class="visually-hidden">Elly</span></a> using <a href="https://www.11ty.dev/">11ty</a>
+				</small>
+			</p>
+		</footer>
+
+		<!-- This page `{{ page.url }}` was built on {% currentBuildDate %} -->
+		<script type="module" src="{% getBundleFileUrl "js" %}"></script>
+	</body>
+</html>

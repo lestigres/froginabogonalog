@@ -1,0 +1,379 @@
+:root {
+	--font-family: system-ui, sans-serif;
+
+	--hue-red: 25;
+	--hue-pink: 350;
+	--hue-purple: 310;
+	--hue-violet: 290;
+	--hue-indigo: 270;
+	--hue-blue: 240;
+	--hue-cyan: 210;
+	--hue-teal: 185;
+	--hue-green: 145;
+	--hue-lime: 125;
+	--hue-yellow: 100;
+	--hue-orange: 75;
+
+	--color-hue: 128.92;
+	--color-0: oklch(99% 0.03 var(--color-hue, 0));
+	--color-1: oklch(95% 0.06 var(--color-hue, 0));
+	--color-2: oklch(88% 0.12 var(--color-hue, 0));
+	--color-3: oklch(80% 0.14 var(--color-hue, 0));
+	--color-4: oklch(74% 0.16 var(--color-hue, 0));
+	--color-5: oklch(68% 0.19 var(--color-hue, 0));
+	--color-6: oklch(63% 0.2 var(--color-hue, 0));
+	--color-7: oklch(58% 0.21 var(--color-hue, 0));
+	--color-8: oklch(53% 0.2 var(--color-hue, 0));
+	--color-9: oklch(49% 0.19 var(--color-hue, 0));
+	--color-10: oklch(42% 0.17 var(--color-hue, 0));
+	--color-11: oklch(35% 0.15 var(--color-hue, 0));
+	--color-12: oklch(27% 0.12 var(--color-hue, 0));
+	--color-13: oklch(20% 0.09 var(--color-hue, 0));
+	--color-14: oklch(14% 0.07 var(--color-hue, 0));
+	--color-15: oklch(11% 0.05 var(--color-hue, 0));
+	--color-bright: oklch(65% 0.3 var(--color-hue, 0));
+
+	--gray-0: oklch(99% var(--gray-chroma, none) var(--gray-hue, none));
+	--gray-1: oklch(95% var(--gray-chroma, none) var(--gray-hue, none));
+	--gray-2: oklch(88% var(--gray-chroma, none) var(--gray-hue, none));
+	--gray-3: oklch(80% var(--gray-chroma, none) var(--gray-hue, none));
+	--gray-4: oklch(74% var(--gray-chroma, none) var(--gray-hue, none));
+	--gray-5: oklch(68% var(--gray-chroma, none) var(--gray-hue, none));
+	--gray-6: oklch(63% var(--gray-chroma, none) var(--gray-hue, none));
+	--gray-7: oklch(58% var(--gray-chroma, none) var(--gray-hue, none));
+	--gray-8: oklch(53% var(--gray-chroma, none) var(--gray-hue, none));
+	--gray-9: oklch(49% var(--gray-chroma, none) var(--gray-hue, none));
+	--gray-10: oklch(43% var(--gray-chroma, none) var(--gray-hue, none));
+	--gray-11: oklch(37% var(--gray-chroma, none) var(--gray-hue, none));
+	--gray-12: oklch(31% var(--gray-chroma, none) var(--gray-hue, none));
+	--gray-13: oklch(25% var(--gray-chroma, none) var(--gray-hue, none));
+	--gray-14: oklch(18% var(--gray-chroma, none) var(--gray-hue, none));
+	--gray-15: oklch(10% var(--gray-chroma, none) var(--gray-hue, none));
+
+	--background-color: light-dark(var(--gray-0), var(--gray-14));
+
+	--text-color: light-dark(var(--gray-10), var(--gray-2));
+	--text-color-link: light-dark(var(--color-8), var(--color-3));
+	--text-color-link-active: light-dark(var(--color-10), var(--color-5));
+	--text-color-link-visited: light-dark(var(--color-9), var(--color-4));
+}
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+:not(:focus-visible) {
+	outline-offset: 0;
+}
+:focus-visible {
+	outline: 0.125em solid;
+	outline-offset: 0.125em;
+	transition: outline-offset 100ms ease-out;
+}
+
+html {
+	color-scheme: light dark;
+	background-color: var(--background-color);
+	color: var(--text-color);
+	font-family: var(--font-family);
+}
+body {
+	margin: 0 auto;
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img {
+	max-width: 100%;
+}
+img:where([width][height]) {
+	height: auto;
+}
+img[src$=".svg"] {
+	width: 100%;
+	height: auto;
+	max-width: none;
+}
+img,
+picture {
+	display: block;
+}
+picture {
+	width: fit-content;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--gray-3);
+}
+header:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: 0.5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--gray-3);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em 0.5em;
+	flex-wrap: wrap;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	font-size: 1em;
+	font-weight: 700;
+	margin-right: 2em;
+	display: flex;
+	gap: 0.5em;
+	align-items: center;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+.home-link img {
+	max-height: 2em;
+	width: auto;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+	margin-right: 1em;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Footer */
+footer a {
+	text-decoration: none;
+}
+
+/* Posts list */
+.postlist {
+	list-style: none;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+	gap: 2em;
+}
+.postlist-item {
+	display: grid;
+	grid-template-areas:
+		"link"
+		"date"
+		"image";
+	grid-template-columns: auto;
+	grid-template-rows: auto auto 1fr;
+	counter-increment: start-from -1;
+	font-size: 1.5em;
+	position: relative;
+	border-radius: 0.25em;
+}
+.postlist-item:is(:focus-within, :hover)::before {
+	content: "";
+	z-index: -1;
+	position: absolute;
+	top: -0.5em;
+	right: -0.5em;
+	bottom: -0.5em;
+	left: -0.5em;
+	background: linear-gradient(to bottom, light-dark(var(--color-1), var(--color-13)), transparent 50%);
+}
+.postlist-item:hover::before {
+	border-radius: 0.5em;
+}
+@supports not selector(:has(a, b)) {
+	.postlist-item:focus-within::before {
+		border-radius: 1.5em;
+	}
+}
+@supports selector(:has(a, b)) {
+	.postlist-item:has(:focus-visible)::before {
+		border-radius: 1.5em;
+	}
+}
+.postlist-item:not(:focus-within) {
+	outline-offset: 0;
+}
+.postlist-item:focus-within {
+	outline: 0.25em solid var(--color-bright);
+	outline-offset: 0.25em;
+	transition: outline-offset 100ms ease-out;
+}
+.postlist-item:focus-within :focus-visible {
+	outline: none; /* usually you want `outline-color: transparent;` so the outlines get added back for forced colors users but in this case we've added another outline already so we don't need to.  */
+}
+.postlist-date {
+	font-size: 0.75em;
+}
+.postlist-date {
+	grid-area: date;
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	grid-area: link;
+	font-weight: 700;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-link::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+.postlist-item > :is(img, picture, .postlist-image-placeholder) {
+	grid-area: image;
+	margin-top: 0.5em;
+}
+.postlist-item :is(img, .postlist-image-placeholder) {
+	border-radius: 0.25em;
+}
+.postlist-item > picture {
+	position: relative;
+}
+.postlist-item > picture::after {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	translate: 0.5em 0.5em;
+	border-radius: 0.25em;
+	z-index: -1;
+	transition: translate 300ms ease-out;
+}
+.postlist-item > picture::after,
+.postlist-image-placeholder {
+	--s: 1em; /* control the size*/
+	--c1: var(--color-1);
+	--c2: var(--color-2);
+	
+	--_g: var(--c1)        6.1%,var(--c2)  6.4% 18.6%,var(--c1) 18.9% 31.1%,
+				var(--c2) 31.4% 43.6%,var(--c1) 43.9% 56.1%,var(--c2) 56.4% 68.6%,#0000 68.9%;
+	background:
+		radial-gradient(var(--s) at 100% 0   ,var(--_g)),
+		radial-gradient(var(--s) at 0    0   ,var(--_g)),
+		radial-gradient(var(--s) at 0    100%,var(--_g)),
+		radial-gradient(var(--s) at 100% 100%,var(--_g)) var(--c1);
+	background-size: var(--s) var(--s);
+}
+.postlist-link:focus-visible ~ picture::after {
+	translate: 0 0;
+	transition: translate 150ms ease-out;
+}
+.postlist-item:hover:not(:focus-within) picture::after {
+	translate: 0.25em 0.25em;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 0.5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
